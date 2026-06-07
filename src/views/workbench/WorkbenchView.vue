@@ -23,6 +23,11 @@ const router = useRouter()
 const authStore = useAuthStore()
 const activeTransactionId = ref(flatTransactions[0]?.id ?? '')
 const traceNo = ref(2606070001)
+const menuCollapsed = ref(false)
+
+function toggleMenu() {
+  menuCollapsed.value = !menuCollapsed.value
+}
 
 const transactionForm = reactive({
   payerName: '深圳市银拓科技有限公司',
@@ -148,7 +153,7 @@ function logout() {
 
 <template>
   <main class="workbench-page">
-    <aside class="sidebar">
+    <aside class="sidebar" :class="{ collapsed: menuCollapsed }">
       <div class="sidebar-brand">
         <div class="brand-badge">CN</div>
         <div>
@@ -191,7 +196,7 @@ function logout() {
     <section class="workspace">
       <header class="topbar">
         <div class="topbar-title">
-          <el-icon><Fold /></el-icon>
+          <el-icon :class="{ rotated: menuCollapsed }" @click="toggleMenu" style="cursor:pointer"><Fold /></el-icon>
           <div>
             <strong>二代支付交易工作台</strong>
             <span>{{ authStore.user?.institutionName ?? '模拟接入机构' }}</span>
@@ -332,7 +337,7 @@ function logout() {
 .workbench-page {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 286px minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   background: #eef3f8;
   color: #172033;
 }
@@ -421,6 +426,30 @@ function logout() {
   margin-top: 8px;
   color: #63f3ba;
 }
+.sidebar.collapsed {
+  width: 70px;
+  min-width: 70px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 0 14px;
+}
+
+.sidebar.collapsed .sidebar-brand span {
+  display: none;
+}
+
+.sidebar.collapsed .trade-menu {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-status {
+  display: none;
+}
+
 
 .workspace {
   min-width: 0;
