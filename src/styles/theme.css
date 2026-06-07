@@ -1,0 +1,19 @@
+:root {
+  --cnaps-blue-900: #071b38;
+  --cnaps-blue-800: #062852;
+  --cnaps-blue-600: #0879dc;
+  --cnaps-cyan-500: #05a7d8;
+  --cnaps-green-500: #1b8a5a;
+  --cnaps-amber-500: #b96b00;
+  --cnaps-red-500: #e63b3b;
+  --cnaps-text: #172033;
+  --cnaps-muted: #69788b;
+  --el-color-primary: #0879dc;
+  --el-color-success: #1b8a5a;
+  --el-border-radius-base: 6px;
+}
+
+.el-button {
+  font-weight: 600;
+}
+
