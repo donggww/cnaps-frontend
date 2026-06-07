@@ -427,18 +427,15 @@ function logout() {
   color: #63f3ba;
 }
 .sidebar.collapsed {
-  width: 70px;
-  min-width: 70px;
+  width: 0;
+  min-width: 0;
+  padding: 0;
   overflow: hidden;
+  box-shadow: none;
   transition: all 0.3s ease;
 }
 
 .sidebar.collapsed .sidebar-brand {
-  justify-content: center;
-  padding: 0 14px;
-}
-
-.sidebar.collapsed .sidebar-brand span {
   display: none;
 }
 
