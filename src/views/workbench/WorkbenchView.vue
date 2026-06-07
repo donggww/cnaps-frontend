@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -17,7 +17,6 @@ import {
 } from '@element-plus/icons-vue'
 
 import { flatTransactions, menuGroups } from '@/menu'
-import type { TransactionItem } from '@/menu/types'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -33,7 +32,7 @@ const transactionForm = reactive({
   priority: '普通',
 })
 
-const activeTransaction = computed<TransactionItem>(() => {
+const activeTransaction = computed(() => {
   return flatTransactions.find((item) => item.id === activeTransactionId.value) ?? flatTransactions[0]
 })
 
@@ -125,7 +124,7 @@ watch(
   { immediate: true },
 )
 
-function handleSelect(index: string) {
+function handleSelect(index) {
   if (flatTransactions.some((item) => item.id === index)) {
     activeTransactionId.value = index
   }

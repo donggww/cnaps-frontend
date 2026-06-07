@@ -1,25 +1,13 @@
 import { defineStore } from 'pinia'
-
-import { login, type LoginPayload } from '@/api/auth'
-
-interface AuthUser {
-  username: string
-  institutionName: string
-  environmentName: string
-}
-
-interface AuthState {
-  token: string
-  user: AuthUser | null
-}
+import { login } from '@/api/auth'
 
 export const useAuthStore = defineStore('auth', {
-  state: (): AuthState => ({
+  state: () => ({
     token: '',
     user: null,
   }),
   actions: {
-    async login(payload: LoginPayload) {
+    async login(payload) {
       const result = await login(payload)
       this.token = result.token
       this.user = {
@@ -34,4 +22,3 @@ export const useAuthStore = defineStore('auth', {
     },
   },
 })
-

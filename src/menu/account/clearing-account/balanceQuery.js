@@ -1,6 +1,5 @@
-import type { TransactionItem } from '@/menu/types'
 
-export const clearingBalanceQuery: TransactionItem = {
+export const clearingBalanceQuery = {
   id: 'saps-balance-query',
   title: '清算账户余额查询',
   code: 'saps.200.001',

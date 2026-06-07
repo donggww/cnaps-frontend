@@ -1,6 +1,5 @@
-import type { TransactionItem } from '@/menu/types'
 
-export const largeValueRemittance: TransactionItem = {
+export const largeValueRemittance = {
   id: 'hvps-large-remittance',
   title: '大额贷记往账',
   code: 'hvps.111.001',

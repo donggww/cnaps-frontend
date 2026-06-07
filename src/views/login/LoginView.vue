@@ -1,14 +1,14 @@
-<script setup lang="ts">
+<script setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { Lock, Monitor, OfficeBuilding, User } from '@element-plus/icons-vue'
 
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const formRef = ref<FormInstance>()
+const formRef = ref()
 const loading = ref(false)
 
 const loginForm = reactive({
@@ -18,7 +18,7 @@ const loginForm = reactive({
   environment: 'SIT',
 })
 
-const rules: FormRules = {
+const rules = {
   username: [{ required: true, message: '请输入操作员号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
   institution: [{ required: true, message: '请选择接入机构', trigger: 'change' }],

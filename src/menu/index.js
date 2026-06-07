@@ -1,10 +1,9 @@
-import type { TransactionGroup, TransactionItem } from '@/menu/types'
 
 import { clearingAccount } from './account/clearing-account'
 import { largeValuePayment } from './payment/large-value'
 import { smallValuePayment } from './payment/small-value'
 
-export const menuGroups: TransactionGroup[] = [
+export const menuGroups= [
   {
     id: 'payment-message',
     title: '支付交易',
@@ -19,7 +18,7 @@ export const menuGroups: TransactionGroup[] = [
   },
 ]
 
-export const flatTransactions: TransactionItem[] = menuGroups.flatMap((group) =>
+export const flatTransactions= menuGroups.flatMap((group) =>
   group.children.flatMap((category) => category.items),
 )
 

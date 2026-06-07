@@ -1,6 +1,5 @@
-import type { TransactionItem } from '@/menu/types'
 
-export const smallValueBatchDebit: TransactionItem = {
+export const smallValueBatchDebit = {
   id: 'beps-batch-debit',
   title: '小额批量借记',
   code: 'beps.351.001',
