@@ -5,7 +5,6 @@ const http = axios.create({
   timeout: 10000,
 })
 
-// 请求拦截器：自动携带 token
 http.interceptors.request.use((config) => {
   let auth
   try {
@@ -18,7 +17,6 @@ http.interceptors.request.use((config) => {
   return config
 })
 
-// 响应拦截器：统一处理业务错误
 http.interceptors.response.use(
   (res) => {
     const body = res.data
@@ -30,6 +28,7 @@ http.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem('cnaps_auth')
+      localStorage.removeItem('cnaps_menu_tree')
       window.location.href = '/login'
     }
     const msg = err.response?.data?.msg || err.message || '网络异常'
@@ -37,10 +36,12 @@ http.interceptors.response.use(
   },
 )
 
-export async function login(payload) {
-  return http.post('/login', payload)
+/** 获取当前用户有权限的菜单编码列表 */
+export async function getUserMenus() {
+  return http.get('/permission/menus')
 }
 
-export async function getUserInfo() {
-  return http.get('/user/info')
+/** 获取当前用户的完整菜单树 */
+export async function getMenuTree() {
+  return http.get('/permission/menu-tree')
 }

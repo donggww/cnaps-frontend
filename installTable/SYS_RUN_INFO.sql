@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS SYS_RUN_INFO;
+CREATE TABLE SYS_RUN_INFO (
+  SYS_CD varchar(10) NOT NULL COMMENT '系统运行日期',
+  SYS_RUN_DATE varchar(10)  DEFAULT NULL COMMENT '系统运行日期',
+  SYS_EOD_DATE varchar(10)  DEFAULT NULL COMMENT '系统跑批日期',
+  SYS_EOD_STATUS varchar(10)  DEFAULT NULL COMMENT '系统状态',
+  PRIMARY KEY (SYS_CD)
+);
+
+alter table SYS_RUN_INFO comment '系统日期管理';

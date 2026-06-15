@@ -12,8 +12,8 @@ const formRef = ref()
 const loading = ref(false)
 
 const loginForm = reactive({
-  username: 'operator01',
-  password: 'cnaps@2026',
+  username: 'admin',
+  password: '123456',
   institution: '102100088898',
   environment: 'SIT',
 })
@@ -35,6 +35,8 @@ async function handleLogin() {
     await authStore.login(loginForm)
     ElMessage.success('登录成功')
     router.push('/workbench')
+  } catch (e) {
+    ElMessage.error(e.message || '登录失败')
   } finally {
     loading.value = false
   }

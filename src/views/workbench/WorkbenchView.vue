@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {
@@ -16,12 +16,13 @@ import {
   TrendCharts,
 } from '@element-plus/icons-vue'
 
-import { flatTransactions, menuGroups } from '@/menu'
+import { flatTransactions } from '@/menu'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const activeTransactionId = ref(flatTransactions[0]?.id ?? '')
+
+const activeTransactionId = ref(flatTransactions[0]?.code ?? '')
 const traceNo = ref(2606070001)
 const menuCollapsed = ref(false)
 
@@ -38,7 +39,7 @@ const transactionForm = reactive({
 })
 
 const activeTransaction = computed(() => {
-  return flatTransactions.find((item) => item.id === activeTransactionId.value) ?? flatTransactions[0]
+  return flatTransactions.find((item) => item.code === activeTransactionId.value) ?? flatTransactions[0]
 })
 
 const activeFields = computed(() => activeTransaction.value.defaultFields)
@@ -109,6 +110,11 @@ const activities = [
   },
 ]
 
+onMounted(async () => {
+  // 从后端加载菜单树（含名称、排序、权限过滤），缓存到 localStorage
+  await authStore.fetchMenuTree()
+})
+
 watch(
   activeTransaction,
   (transaction) => {
@@ -130,7 +136,7 @@ watch(
 )
 
 function handleSelect(index) {
-  if (flatTransactions.some((item) => item.id === index)) {
+  if (flatTransactions.some((item) => item.code === index)) {
     activeTransactionId.value = index
   }
 }
@@ -170,7 +176,7 @@ function logout() {
         active-text-color="#ffffff"
         @select="handleSelect"
       >
-        <el-sub-menu v-for="group in menuGroups" :key="group.id" :index="group.id">
+        <el-sub-menu v-for="group in authStore.menuTree" :key="group.id" :index="group.id">
           <template #title>
             <el-icon><Operation /></el-icon>
             <span>{{ group.title }}</span>
@@ -204,6 +210,9 @@ function logout() {
         </div>
         <div class="topbar-actions">
           <el-tag type="success" effect="dark">{{ authStore.user?.environmentName ?? '仿真沙箱环境' }}</el-tag>
+          <el-button v-if="authStore.isAdmin" type="warning" plain :icon="Operation" @click="router.push('/admin/permissions')">
+            权限管理
+          </el-button>
           <el-button :icon="Bell" circle />
           <el-button :icon="SwitchButton" @click="logout">退出</el-button>
         </div>
